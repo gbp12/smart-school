@@ -17,5 +17,5 @@ class SensorType extends Model
     {
         // Un tipo de sensor tiene muchos sensores
         return $this->hasMany(Sensor::class, 'id_type');
-    }    
+    }
 }
