@@ -5,6 +5,8 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
+require_once 'Sensor.php';
+
 class SensorType extends Model
 {
     use HasFactory;
