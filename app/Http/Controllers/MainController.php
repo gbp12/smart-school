@@ -98,4 +98,19 @@ LIMIT 1;";
 
         return $diferencias;
     }
+
+
+    public function getLastEightHours()
+    {
+        $query = " SELECT m.id_measure, m.consumo, m.fecha 
+    FROM measurements m
+    WHERE id_sensor = 1
+      AND fecha BETWEEN '2020-07-07 15:00:00' AND DATE_SUB('2020-07-07 15:00:00', INTERVAL 8 HOUR)";
+
+        //fecha >= DATE_SUB('2020-07-07 15:00:00', INTERVAL 8 HOUR)
+
+        //WHERE event_date BETWEEN CURDATE() AND DATE_ADD(CURDATE(), INTERVAL 1 DAY)
+        $resultadosPreviousYear = DB::select($query);
+        dd($resultadosPreviousYear);
+    }
 }

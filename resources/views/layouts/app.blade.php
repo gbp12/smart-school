@@ -50,18 +50,18 @@
     @yield('content')
     <div class="marquee">
         <div class="track">
-            <div id=scrollText class="content">&nbsp;</div>
-            <!--<p> &nbsp; &nbsp; &nbsp; &nbsp;</p> -->
-            <div id=scrollTextCopy class="content">&nbsp;</div>
+            <div id=scrollText class="content"></div>
+            <div id=scrollTextCopy class="content"></div>
         </div>
     </div>
 
 </body>
 <script>
+    //Hacer que los consejos sean todos de la misma longitud aproximadamente
     let consejos = [
-        "     Consejo 1: Lorem ipsum much texdo dolor tenet arepo opera rotas este es un cosejo poromocionado por el cabildo de gran canaria y financiado con vuestros impuestos jiji jaja money money me encanta el dinero &nbsp;	&nbsp;",
+        "     Consejo 1: Lorem ipsum much texdo dolor sator arepo tenet opera rotas este es un cosejo poromocionado por el cabildo de gran canaria y financiado con vuestros impuestos jiji jaja money money me encanta el dinero &nbsp;	&nbsp;",
         "     Consejo 2: Lorem ipsum much texdo dolor tenet arepo opera rotas este es un cosejo y es mas corto	&nbsp;	&nbsp;",
-        "     Consejo 3: Lorem ipsum much texdo dolor tenet arepo opera rotas este es un cosejo poromocionado por el cabildo de gran canaria y financiado con vuestros impuestos jiji jaja money money me encanta el dinero y ademas soy un texto mucho mas largo que el resto, o mai got que texto tn largo madre mi aue alguien llame a los bomberos no queda espacio en este disco duro para tantos caracteres &nbsp;	&nbsp;",
+        "     Consejo 3: Lorem ipsum much texdo dolor tenet arepo opera rotas este es un cosejo poromocionado por el cabildo de gran canaria y financiado con vuestros impuestos jiji jaja money money me encanta el dinero y ademas soy un texto mucho mas largo que el resto, o mai got que texto tn largo madre mi aue alguien llame a los bomberos no queda espacio en este disco duro para tantos caracteres y se mueve demasiado largo sefuramente habra que hacwer algo con js para que no vaya tan rapido o mai &nbsp;	&nbsp;",
         "     Consejo 4: Lorem ipsum much texdo dolor tenet arepo opera rotas este es un cosejo poromocionado por el cabildo de gran y soy de tamaño mediano &nbsp;	&nbsp;",
     ]
     changeText();
