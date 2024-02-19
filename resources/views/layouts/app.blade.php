@@ -29,7 +29,7 @@
             position: absolute;
             white-space: nowrap;
             will-change: transform;
-            animation: marquee 8s linear infinite;
+            animation: marquee 25s linear infinite;
         }
 
         @keyframes marquee {
@@ -76,9 +76,21 @@
         //num = randomInteger(0, 3)
         //newText = consejos[num]
         //console.log(newText + " y num = ", num);
-        scrollText = consejos[randomInteger(0, 3)]
+        scrollText = consejos[randomInteger(0, consejos.length - 1)]
+        changeScrollSpeed(scrollText.length);
         scroll.innerHTML = scrollText
         scrollCopy.innerHTML = scrollText
+    }
+
+    function changeScrollSpeed(length) {
+        const scrollSpeed = 10;
+
+        //Calculate time needed to scroll text at scrollSpeed characters per second
+        time = length / scrollSpeed;
+        //change css values
+        document.querySelector(".track").style.animationDuration = time + "s";
+
+
     }
 </script>
 
