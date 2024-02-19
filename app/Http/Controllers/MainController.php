@@ -102,15 +102,23 @@ LIMIT 1;";
 
     public function getLastEightHours()
     {
+        $curDate = "2020-07-07 08:00:00"; //Must change to current date when sensors are connected to db
+        $interval = 8; //Measured in hours
+        $easyQuery = "SELECT * FROM buildings";
         $query = " SELECT m.id_measure, m.consumo, m.fecha 
-    FROM measurements m
-    WHERE id_sensor = 1
-      AND fecha BETWEEN '2020-07-07 15:00:00' AND DATE_SUB('2020-07-07 15:00:00', INTERVAL 8 HOUR)";
+    FROM 
+        measurements m
+    WHERE 
+        fecha BETWEEN DATE_SUB('$curDate', INTERVAL $interval HOUR) AND '$curDate'  
+    AND 
+        id_sensor = 1";
+        //closest date must go second 
 
         //fecha >= DATE_SUB('2020-07-07 15:00:00', INTERVAL 8 HOUR)
-
         //WHERE event_date BETWEEN CURDATE() AND DATE_ADD(CURDATE(), INTERVAL 1 DAY)
         $resultadosPreviousYear = DB::select($query);
+        $resultadosPreviousYear2 = DB::select($easyQuery);
+
         dd($resultadosPreviousYear);
     }
 }
