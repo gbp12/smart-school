@@ -61,11 +61,15 @@ LIMIT 1;";
         // Execute queries
         $resultadosCurrentYear = DB::select($queryCurrentYear);
         $resultadosPreviousYear = DB::select($queryPreviousYear);
-        array_push($resultadosCurrentYear, $resultadosPreviousYear[0]);
+        //dd($resultadosPreviousYear);
+        if (!empty($resultadosPreviousYear)) {
+
+            array_push($resultadosCurrentYear, $resultadosPreviousYear[0]);
+        }
 
         $diferencias = $this->calculateActualUse($resultadosCurrentYear);
 
-        return response()->json($diferencias, 200);
+        return response()->json($resultadosCurrentYear, 200);
     }
 
 
