@@ -102,10 +102,10 @@ LIMIT 1;";
 
     public function getLastEightHours()
     {
-        $curDate = "2020-07-07 08:00:00"; //Must change to current date when sensors are connected to db
-        $interval = 8; //Measured in hours
+        $curDate = "2020-02-01 22:00:00"; //Must change to current date when sensors are connected to db
+        $interval = 10; //Measured in hours
 
-        $queryElectricity = " SELECT m.id_measure, m.consumo, CONCAT(LPAD(HOUR(m.fecha), 2, '0'), ':', LPAD(MINUTE(m.fecha), 2, '0')) AS time
+        $queryElectricity = " SELECT m.consumo, CONCAT(LPAD(HOUR(m.fecha), 2, '0'), ':', LPAD(MINUTE(m.fecha), 2, '0')) AS fecha
     FROM 
         measurements m
     WHERE 
@@ -114,7 +114,7 @@ LIMIT 1;";
         id_sensor = 1";
         //closest date must come second 
 
-        $queryWater = " SELECT m.id_measure, m.consumo, CONCAT(LPAD(HOUR(m.fecha), 2, '0'), ':', LPAD(MINUTE(m.fecha), 2, '0')) AS time
+        $queryWater = " SELECT  m.consumo, CONCAT(LPAD(HOUR(m.fecha), 2, '0'), ':', LPAD(MINUTE(m.fecha), 2, '0')) AS fecha
     FROM 
         measurements m
     WHERE 
@@ -124,14 +124,18 @@ LIMIT 1;";
         //sensor changed
 
         $electricityResults  = DB::select($queryElectricity);
+        $electricityResults = $this->calculateActualUse($electricityResults);
+        //dd($electricityResults);
         $waterResults = DB::select($queryWater);
-        //dd($waterResults);
+        $waterResults = $this->calculateActualUse($waterResults);
+
+        //dd($this->calculateActualUse($electricityResults));
 
 
-        $totalElectricityConsumo = array_column($electricityResults, 'consumo'); //we only need consumo
-        $electricityLabels =  array_column($electricityResults, 'time');
-        $totalWaterConsumo = array_column($waterResults, 'consumo');
-        $waterLabels =  array_column($waterResults, 'time');
+        $totalElectricityConsumo = array_column($electricityResults, 'diferencia_consumo'); //we only need consumo
+        $electricityLabels =  array_column($electricityResults, 'fecha');
+        $totalWaterConsumo = array_column($waterResults, 'diferencia_consumo');
+        $waterLabels =  array_column($waterResults, 'fecha');
         //dd($totalElectricityConsumo, $electricityLabels);
 
 
