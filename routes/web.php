@@ -23,4 +23,4 @@ Route::get('/getYearlyElectricity', "App\Http\Controllers\MainController@getYear
 /* Consigue los consumos del ultimo año dividido en meses */
 Route::get('/getMonthlyElectricity', "App\Http\Controllers\MainController@getMonthlyElectricity");
 /*Consigue los consumos totales de las ultimas 8 horas*/
-Route::get('/getLastEightHours', 'App\Http\Controllers\MainController@getLastEightHours');
+Route::get('/getLastEightHours', 'App\Http\Controllers\MainController@getLastEightHours')->name("main.eightHour");;

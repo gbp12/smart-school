@@ -105,7 +105,7 @@ LIMIT 1;";
         $curDate = "2020-07-07 08:00:00"; //Must change to current date when sensors are connected to db
         $interval = 8; //Measured in hours
 
-        $queryElectricity = " SELECT m.id_measure, m.consumo, m.fecha 
+        $queryElectricity = " SELECT m.id_measure, m.consumo, CONCAT(LPAD(HOUR(m.fecha), 2, '0'), ':', LPAD(MINUTE(m.fecha), 2, '0')) AS time
     FROM 
         measurements m
     WHERE 
@@ -114,7 +114,7 @@ LIMIT 1;";
         id_sensor = 1";
         //closest date must come second 
 
-        $queryWater = " SELECT m.id_measure, m.consumo, m.fecha 
+        $queryWater = " SELECT m.id_measure, m.consumo, CONCAT(LPAD(HOUR(m.fecha), 2, '0'), ':', LPAD(MINUTE(m.fecha), 2, '0')) AS time
     FROM 
         measurements m
     WHERE 
@@ -125,16 +125,36 @@ LIMIT 1;";
 
         $electricityResults  = DB::select($queryElectricity);
         $waterResults = DB::select($queryWater);
+        //dd($waterResults);
+
 
         $totalElectricityConsumo = array_column($electricityResults, 'consumo'); //we only need consumo
+        $electricityLabels =  array_column($electricityResults, 'time');
         $totalWaterConsumo = array_column($waterResults, 'consumo');
+        $waterLabels =  array_column($waterResults, 'time');
+        //dd($totalElectricityConsumo, $electricityLabels);
+
 
 
         $electricityAverage = $this->averageCalculator($totalElectricityConsumo);
         $waterAverage = $this->averageCalculator(($totalWaterConsumo));
 
 
-        dd($totalElectricityConsumo, $totalWaterConsumo, $waterAverage, $electricityAverage);
+        //dd($totalElectricityConsumo, $totalWaterConsumo, $waterAverage, $electricityAverage);
+
+
+        $viewData = [];
+        $viewData["title"] = "Consumo 8 horas"; //Cambiar
+        $data["totalElectricityConsumo"] = $totalElectricityConsumo;
+        $data["electricityLabels"] = $electricityLabels;
+        $data["totalWaterConsumo"] = $totalWaterConsumo;
+        $data["waterLabels"] = $waterLabels;
+        $data["electricityAverage"] = $electricityAverage;
+        $data["waterAverage"] = $waterAverage;
+        $data["electricityThreshold"] = [min($totalElectricityConsumo), max($totalElectricityConsumo)]; //might not be needed | might be simplified in function
+        $data["waterThreshold"] = [min($totalWaterConsumo), max($totalWaterConsumo)]; //ditto
+        //dd($viewData);
+        return view('eightHour', compact('data'))->with("verDatos", $viewData);
     }
 
     public function averageCalculator($array)
