@@ -19,7 +19,7 @@
         type: 'line',
         data: {
 
-            labels: @json($data['waterLabels']), //Works but highlighted as error, FIX
+            labels: @json($data['waterLabels']), //Works but its highlighted as an error, FIX
             datasets: [{
                 label: 'kW/h',
                 data: @json($data['totalWaterConsumo']),
