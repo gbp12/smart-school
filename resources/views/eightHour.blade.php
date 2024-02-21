@@ -3,35 +3,102 @@
 @section('content')
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 <style>
-    #juan {
-        color: red;
-    }
+
 </style>
 
-<h1> {{$verDatos["title"]}}</h1>
-<h2 id=juan></h2>
-<div style="width: 80%; margin: auto;">
-    <canvas id="barChart"></canvas>
+
+<div class="container-fluid h-100">
+    <div class="row justify-content-evenly h-100">
+        <div class="col-5 h-100">
+            <h1> {{$verDatos["title"]}}</h1>
+            <div style="width: 80%; margin: auto;">
+                <canvas id="barChartElectricity"></canvas>
+            </div>
+        </div>
+        <div class="col-5 h-100">
+            <h1> {{$verDatos["title"]}}</h1>
+            <div style="width: 80%; margin: auto;">
+                <canvas id="barChartWater" class="w-100 h-100"></canvas>
+            </div>
+        </div>
+    </div>
 </div>
 <script type="text/javascript">
-    var ctx = document.getElementById('barChart').getContext('2d');
-    var myChart = new Chart(ctx, {
+    let dataWater = (@json($data['totalWaterConsumo'])).map(Number);
+    let labelsWater = @json($data['totalWaterConsumo']);
+
+
+    let ctx = document.getElementById('barChartWater').getContext('2d');
+    let myChart = new Chart(ctx, {
         type: 'line',
         data: {
 
-            labels: @json($data['waterLabels']), //Works but its highlighted as an error, FIX
+            labels: labelsWater, //Works but its highlighted as an error, FIX?
             datasets: [{
-                label: 'kW/h',
-                data: @json($data['totalWaterConsumo']),
+                label: 'l/h',
+                data: dataWater,
                 backgroundColor: 'rgba(75, 192, 192, 0.2)',
                 borderColor: 'rgba(75, 192, 192, 1)',
                 borderWidth: 1
             }]
         },
         options: {
+
+            responsive: true,
+            aspectRatio: 1.1,
             scales: {
                 y: {
-                    beginAtZero: false
+                    ticks: {
+                        color: '#666',
+                        font: {
+                            size: 20,
+                            weight: 'bold',
+
+                        }
+                    },
+                    beginAtZero: true,
+
+
+                    max: ((Math.max(...dataWater) * 1.2)) //Leaves some space at the top
+                }
+            }
+        }
+    });
+
+    let dataElectricity = (@json($data['totalElectricityConsumo'])).map(Number);
+    let labelsElectricity = @json($data['totalElectricityConsumo']);
+
+    let ctxE = document.getElementById('barChartElectricity').getContext('2d');
+    let myChartE = new Chart(ctxE, {
+        type: 'line',
+        data: {
+
+            labels: labelsElectricity, //Works but its highlighted as an error, FIX?
+            datasets: [{
+                label: 'kW/h',
+                data: dataElectricity,
+                backgroundColor: 'rgba(75, 192, 192, 0.2)',
+                borderColor: 'rgba(75, 192, 192, 1)',
+                borderWidth: 1
+            }]
+        },
+        options: {
+
+            responsive: true,
+            aspectRatio: 1.1,
+            scales: {
+                y: {
+                    ticks: {
+                        color: '#666',
+                        font: {
+                            size: 20,
+                            weight: 'bold',
+                        }
+                    },
+                    beginAtZero: true,
+
+
+                    max: ((Math.max(...dataElectricity) * 1.2)) //Leaves some space at the top
                 }
             }
         }

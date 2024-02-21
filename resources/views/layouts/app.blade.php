@@ -7,23 +7,18 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.1/dist/css/bootstrap.min.css" rel="stylesheet" crossorigin="anonymous" />
     <title>Smart School!</title>
     <style>
+        body {
+            height: 90vh;
+        }
+
         .marquee {
             position: relative;
             width: 100vw;
             max-width: 100%;
-            height: 08vh;
+            height: 7vh;
             overflow-x: hidden;
         }
 
-        /*
-        #scrollText {
-            font-size: 40px;
-        }
-
-        #scrollTextCopy {
-            font-size: 40px;
-        }
-*/
         .track {
             display: flex;
             flex-direction: row;
@@ -35,6 +30,7 @@
 
         .track div {
             font-size: 42px;
+            color: whitesmoke;
         }
 
         @keyframes marquee {
@@ -53,7 +49,7 @@
 
     <header> este es el header de la app </header>
     @yield('content')
-    <nav class="navbar fixed-bottom navbar-light bg-light">
+    <nav class="navbar fixed-bottom navbar-dark bg-dark">
         <div class="marquee">
             <div class="track">
                 <div id=scrollText class="content"></div>
@@ -64,7 +60,7 @@
 
 </body>
 <script>
-    //Hacer que los consejos sean todos de la misma longitud aproximadamente
+    //Añadir consejos
     let consejos = [
         "     Consejo 1: Lorem ipsum much texdo dolor sator arepo tenet opera rotas este es un cosejo poromocionado por el cabildo de gran canaria y financiado con vuestros impuestos jiji jaja money money me encanta el dinero &nbsp;	&nbsp;",
         "     Consejo 2: Lorem ipsum much texdo dolor tenet arepo opera rotas este es un cosejo y es mas corto	&nbsp;	&nbsp;",
@@ -80,11 +76,10 @@
     function changeText() {
         let scroll = document.getElementById("scrollText")
         let scrollCopy = document.getElementById("scrollTextCopy")
-        //num = randomInteger(0, 3)
-        //newText = consejos[num]
-        //console.log(newText + " y num = ", num);
+
         scrollText = consejos[randomInteger(0, consejos.length - 1)]
         changeScrollSpeed(scrollText.length);
+
         scroll.innerHTML = scrollText
         scrollCopy.innerHTML = scrollText
     }
