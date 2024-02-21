@@ -150,4 +150,86 @@ LIMIT 1;";
 
         return $diferencias;
     }
+
+
+    public function getLastEightHours()
+    {
+        $curDate = "2020-02-01 22:00:00"; //Must change to current date when sensors are connected to db
+        $interval = 10; //Measured in hours
+
+        $queryElectricity = " SELECT m.consumo, CONCAT(LPAD(HOUR(m.fecha), 2, '0'), ':', LPAD(MINUTE(m.fecha), 2, '0')) AS fecha
+    FROM 
+        measurements m
+    WHERE 
+        fecha BETWEEN DATE_SUB('$curDate', INTERVAL $interval HOUR) AND '$curDate'  
+    AND 
+        id_sensor = 1";
+        //closest date must come second 
+
+        $queryWater = " SELECT  m.consumo, CONCAT(LPAD(HOUR(m.fecha), 2, '0'), ':', LPAD(MINUTE(m.fecha), 2, '0')) AS fecha
+    FROM 
+        measurements m
+    WHERE 
+        fecha BETWEEN DATE_SUB('$curDate', INTERVAL $interval HOUR) AND '$curDate'  
+    AND 
+        id_sensor = 2";
+        //sensor changed
+
+        $electricityResults  = DB::select($queryElectricity);
+        $electricityResults = $this->calculateActualUse($electricityResults);
+        //dd($electricityResults);
+        $waterResults = DB::select($queryWater);
+        $waterResults = $this->calculateActualUse($waterResults);
+
+        //dd($this->calculateActualUse($electricityResults));
+
+
+        $totalElectricityConsumo = array_column($electricityResults, 'diferencia_consumo'); //we only need consumo
+        $electricityLabels =  array_column($electricityResults, 'fecha');
+        $totalWaterConsumo = array_column($waterResults, 'diferencia_consumo');
+        $waterLabels =  array_column($waterResults, 'fecha');
+        //dd($totalElectricityConsumo, $electricityLabels);
+
+
+
+        $electricityAverage = $this->averageCalculator($totalElectricityConsumo);
+        $waterAverage = $this->averageCalculator(($totalWaterConsumo));
+
+
+        //dd($totalElectricityConsumo, $totalWaterConsumo, $waterAverage, $electricityAverage);
+
+
+        $viewData = [];
+        $viewData["titleWater"] = "Consumo agua 8 horas"; //Cambiar
+        $viewData["titleElectricity"] = "Consumo electrico 8 horas"; //Cambiar
+        $viewData["lastReadingElectricity"] = end($totalElectricityConsumo);
+        $viewData["lastReadingWater"] = end($totalWaterConsumo);
+        $viewData["electricityAverage"] = $electricityAverage;
+        $viewData["waterAverage"] = $waterAverage;
+        $viewData["lastReadingElectricityDate"] = end($electricityLabels);
+        $viewData["lastReadingWaterDate"] = end($waterLabels);
+
+
+        $data["totalElectricityConsumo"] = $totalElectricityConsumo;
+        $data["electricityLabels"] = $electricityLabels;
+        $data["totalWaterConsumo"] = $totalWaterConsumo;
+        $data["waterLabels"] = $waterLabels;
+        $data["electricityAverage"] = $electricityAverage;
+        $data["waterAverage"] = $waterAverage;
+
+        //$data["electricityThreshold"] = [min($totalElectricityConsumo), max($totalElectricityConsumo)]; //might not be needed | might be simplified in function
+        //$data["waterThreshold"] = [min($totalWaterConsumo), max($totalWaterConsumo)]; //ditto
+
+        return view('eightHour', compact('data'))->with("verDatos", $viewData);
+    }
+
+    public function averageCalculator($array)
+    {
+        if (count($array)) {
+            $a = array_filter($array);
+            $average = array_sum($a) / count($a);
+            return round($average, 2);
+        }
+        return 0;
+    }
 }
