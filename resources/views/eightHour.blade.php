@@ -38,8 +38,8 @@
                 label: 'l/h',
                 data: dataWater,
                 backgroundColor: 'rgba(75, 192, 192, 0.2)',
-                borderColor: 'rgba(75, 192, 192, 1)',
-                borderWidth: 1
+                borderColor: 'rgba(66, 135, 245, 1)',
+                borderWidth: 3
             }]
         },
         options: {
@@ -88,8 +88,8 @@
                 label: 'kW/h',
                 data: dataElectricity,
                 backgroundColor: 'rgba(75, 192, 192, 0.2)',
-                borderColor: 'rgba(75, 192, 192, 1)',
-                borderWidth: 1
+                borderColor: 'rgba(153, 149, 41, 1)',
+                borderWidth: 3
             }]
         },
         options: {
