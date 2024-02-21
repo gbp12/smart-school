@@ -25,7 +25,7 @@
 </div>
 <script type="text/javascript">
     let dataWater = (@json($data['totalWaterConsumo'])).map(Number);
-    let labelsWater = @json($data['totalWaterConsumo']);
+    let labelsWater = @json($data['waterLabels']);
 
 
     let ctx = document.getElementById('barChartWater').getContext('2d');
@@ -60,13 +60,23 @@
 
 
                     max: ((Math.max(...dataWater) * 1.2)) //Leaves some space at the top
+                },
+                x: {
+                    ticks: {
+                        color: '#666',
+                        font: {
+                            size: 20,
+                            weight: 'bold',
+
+                        }
+                    }
                 }
             }
         }
     });
 
     let dataElectricity = (@json($data['totalElectricityConsumo'])).map(Number);
-    let labelsElectricity = @json($data['totalElectricityConsumo']);
+    let labelsElectricity = @json($data['electricityLabels']);
 
     let ctxE = document.getElementById('barChartElectricity').getContext('2d');
     let myChartE = new Chart(ctxE, {
@@ -99,6 +109,16 @@
 
 
                     max: ((Math.max(...dataElectricity) * 1.2)) //Leaves some space at the top
+                },
+                x: {
+                    ticks: {
+                        color: '#666',
+                        font: {
+                            size: 20,
+                            weight: 'bold',
+
+                        }
+                    }
                 }
             }
         }

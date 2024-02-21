@@ -7,10 +7,6 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.1/dist/css/bootstrap.min.css" rel="stylesheet" crossorigin="anonymous" />
     <title>Smart School!</title>
     <style>
-        body {
-            height: 90vh;
-        }
-
         .marquee {
             position: relative;
             width: 100vw;
