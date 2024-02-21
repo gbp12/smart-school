@@ -184,9 +184,9 @@ LIMIT 1;";
         //dd($this->calculateActualUse($electricityResults));
 
 
-        $totalElectricityConsumo = array_column($electricityResults, 'diferencia_consumo'); //we only need consumo
+        $totalElectricityConsumo = array_column($electricityResults, 'consumo'); //we only need consumo
         $electricityLabels =  array_column($electricityResults, 'fecha');
-        $totalWaterConsumo = array_column($waterResults, 'diferencia_consumo');
+        $totalWaterConsumo = array_column($waterResults, 'consumo');
         $waterLabels =  array_column($waterResults, 'fecha');
         //dd($totalElectricityConsumo, $electricityLabels);
 
@@ -202,12 +202,10 @@ LIMIT 1;";
         $viewData = [];
         $viewData["titleWater"] = "Consumo agua 8 horas"; //Cambiar
         $viewData["titleElectricity"] = "Consumo electrico 8 horas"; //Cambiar
-        $viewData["lastReadingElectricity"] = end($totalElectricityConsumo);
-        $viewData["lastReadingWater"] = end($totalWaterConsumo);
+
         $viewData["electricityAverage"] = $electricityAverage;
         $viewData["waterAverage"] = $waterAverage;
-        $viewData["lastReadingElectricityDate"] = end($electricityLabels);
-        $viewData["lastReadingWaterDate"] = end($waterLabels);
+
 
 
         $data["totalElectricityConsumo"] = $totalElectricityConsumo;
@@ -216,11 +214,17 @@ LIMIT 1;";
         $data["waterLabels"] = $waterLabels;
         $data["electricityAverage"] = $electricityAverage;
         $data["waterAverage"] = $waterAverage;
+        $data["lastReadingElectricityDate"] = end($electricityLabels);
+        $data["lastReadingWaterDate"] = end($waterLabels);
+        $data["lastReadingElectricity"] = end($totalElectricityConsumo);
+        $data["lastReadingWater"] = end($totalWaterConsumo);
 
         //$data["electricityThreshold"] = [min($totalElectricityConsumo), max($totalElectricityConsumo)]; //might not be needed | might be simplified in function
         //$data["waterThreshold"] = [min($totalWaterConsumo), max($totalWaterConsumo)]; //ditto
 
-        return view('eightHour', compact('data'))->with("verDatos", $viewData);
+        //return view('eightHour', compact('data'))->with("verDatos", $viewData);
+        //dd($data);
+        return response()->json($data, 200);
     }
 
     public function averageCalculator($array)
