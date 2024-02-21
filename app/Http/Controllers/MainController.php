@@ -148,16 +148,26 @@ LIMIT 1;";
 
 
         $viewData = [];
-        $viewData["title"] = "Consumo 8 horas"; //Cambiar
+        $viewData["titleWater"] = "Consumo agua 8 horas"; //Cambiar
+        $viewData["titleElectricity"] = "Consumo electrico 8 horas"; //Cambiar
+        $viewData["lastReadingElectricity"] = end($totalElectricityConsumo);
+        $viewData["lastReadingWater"] = end($totalWaterConsumo);
+        $viewData["electricityAverage"] = $electricityAverage;
+        $viewData["waterAverage"] = $waterAverage;
+        $viewData["lastReadingElectricityDate"] = end($electricityLabels);
+        $viewData["lastReadingWaterDate"] = end($waterLabels);
+
+
         $data["totalElectricityConsumo"] = $totalElectricityConsumo;
         $data["electricityLabels"] = $electricityLabels;
         $data["totalWaterConsumo"] = $totalWaterConsumo;
         $data["waterLabels"] = $waterLabels;
         $data["electricityAverage"] = $electricityAverage;
         $data["waterAverage"] = $waterAverage;
-        $data["electricityThreshold"] = [min($totalElectricityConsumo), max($totalElectricityConsumo)]; //might not be needed | might be simplified in function
-        $data["waterThreshold"] = [min($totalWaterConsumo), max($totalWaterConsumo)]; //ditto
-        //dd($viewData);
+
+        //$data["electricityThreshold"] = [min($totalElectricityConsumo), max($totalElectricityConsumo)]; //might not be needed | might be simplified in function
+        //$data["waterThreshold"] = [min($totalWaterConsumo), max($totalWaterConsumo)]; //ditto
+
         return view('eightHour', compact('data'))->with("verDatos", $viewData);
     }
 

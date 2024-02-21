@@ -3,22 +3,29 @@
 @section('content')
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 <style>
-
+    span {
+        font-weight: bold;
+    }
 </style>
 
 
 <div class="container-fluid h-100">
     <div class="row justify-content-evenly h-100">
         <div class="col-5 h-100">
-            <h1> {{$verDatos["title"]}}</h1>
+            <h1> {{$verDatos["titleElectricity"]}}</h1>
             <div style="width: 80%; margin: auto;">
                 <canvas id="barChartElectricity"></canvas>
+                <h2>Ultima medicion <span>{{$verDatos["lastReadingElectricity"]}}</span> kW/h</h2>
+                <h3>Tomada a las <span>{{$verDatos["lastReadingElectricityDate"]}}</span></h3>
+
             </div>
         </div>
         <div class="col-5 h-100">
-            <h1> {{$verDatos["title"]}}</h1>
+            <h1> {{$verDatos["titleWater"]}}</h1>
             <div style="width: 80%; margin: auto;">
                 <canvas id="barChartWater" class="w-100 h-100"></canvas>
+                <h2>Ultima medicion <span>{{$verDatos["lastReadingWater"]}}</span> l/h</h2>
+                <h3>Tomada a las <span>{{$verDatos["lastReadingWaterDate"]}}</span></h3>
             </div>
         </div>
     </div>
