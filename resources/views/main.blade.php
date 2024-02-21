@@ -1,5 +1,14 @@
 @extends('layouts.app')
 
 @section('content')
-<h1> Esto crea el contenido de la vista principal </h1>
+<section class="container ">
+    <div class="row ">
+        <div class="col-md-6">
+            <canvas id="chart1"></canvas>
+        </div>
+        <div class="col-md-6">
+            <canvas id="chart2"></canvas>
+        </div>
+    </div>
+</section>
 @endsection

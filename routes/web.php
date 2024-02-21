@@ -21,3 +21,5 @@ Route::get('/getMonthlyElectricity', "App\Http\Controllers\MainController@getMon
 Route::get('/getMonthlyWater', "App\Http\Controllers\MainController@getMonthlyWater");
 /* Consigue los consumos de luz del ultimo mes dividido en semanas */
 Route::get('/getWeeklyElectricity', "App\Http\Controllers\MainController@getWeeklyElectricity");
+/* Consigue los consumos de luz del ultimo mes dividido en semanas */
+Route::get('/getWeeklyWater', "App\Http\Controllers\MainController@getWeeklyWater");
