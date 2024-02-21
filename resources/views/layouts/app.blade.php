@@ -11,10 +11,11 @@
             position: relative;
             width: 100vw;
             max-width: 100%;
-            height: 200px;
+            height: 08vh;
             overflow-x: hidden;
         }
 
+        /*
         #scrollText {
             font-size: 40px;
         }
@@ -22,7 +23,7 @@
         #scrollTextCopy {
             font-size: 40px;
         }
-
+*/
         .track {
             display: flex;
             flex-direction: row;
@@ -30,6 +31,10 @@
             white-space: nowrap;
             will-change: transform;
             animation: marquee 25s linear infinite;
+        }
+
+        .track div {
+            font-size: 42px;
         }
 
         @keyframes marquee {
@@ -48,12 +53,14 @@
 
     <header> este es el header de la app </header>
     @yield('content')
-    <div class="marquee">
-        <div class="track">
-            <div id=scrollText class="content"></div>
-            <div id=scrollTextCopy class="content"></div>
+    <nav class="navbar fixed-bottom navbar-light bg-light">
+        <div class="marquee">
+            <div class="track">
+                <div id=scrollText class="content"></div>
+                <div id=scrollTextCopy class="content"></div>
+            </div>
         </div>
-    </div>
+    </nav>
 
 </body>
 <script>
