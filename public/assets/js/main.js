@@ -4,7 +4,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
     var currentIndex = 0;
 
-    var array_of_functions = [renderWeeklyView, hola, renderEightHours, renderEveryDayLastThreeWeeks];
+    var array_of_functions = [renderEveryDayLastThreeWeeks]; //renderWeeklyView, hola, renderEightHours, renderEveryDayLastThreeWeeks
 
     function callNextFunction() {
     
@@ -24,7 +24,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
     setInterval(() => {
         callNextFunction();
-    }, 3000);
+    }, 30000000);
 });
 
 function clearAll(){
@@ -49,7 +49,19 @@ async function renderEveryDayLastThreeWeeks(ctx, ct2){
         console.error("Error fetching data:", error);
     });
 
-console.log(threeWeeksData);
+    console.log(threeWeeksData);
+    let htmlBeforeElec = "<h1 class='test'> Consumo electrico en las ultimas 3 semanas</h1>";
+    let htmlAfterElec = "<h2 class='test'>Hoy estamos a <span>"+threeWeeksData.data.daysLabels[6]+"</span></h2> \
+    <h3 class='test'>Y hoy hemos consumido un total de <span>"+threeWeeksData.data.week1Electricity[6]+" kW/h</span> </h3>";
+    let htmlBeforeWater = "<h1 class='test'> Consumo de agua en las ultimas 3 semanas</h1>";
+    let htmlAfterWater = "<h2 class='test'>Hoy estamos a <span>"+threeWeeksData.data.daysLabels[6]+"</span></h2> \
+    <h3 class='test'>Y hoy hemos consumido un total de <span>"+threeWeeksData.data.week1Water[6]+" litros</span> </h3>";
+
+
+    $(htmlBeforeElec).insertBefore("#chart1");
+    $(htmlAfterElec).insertAfter("#chart1");
+    $(htmlBeforeWater).insertBefore("#chart2");
+    $(htmlAfterWater).insertAfter("#chart2");
 
 
     const dataElectricity = {
@@ -58,17 +70,17 @@ console.log(threeWeeksData);
           {
             label: "Semana pasada",
             data: threeWeeksData.data.week3Electricity,
-            backgroundColor: "rgba(75, 192, 192, 0.6)",
+            backgroundColor: "rgba(212, 119, 94, 0.6)",
           },
           {
             label: "Semana anterior",
             data: threeWeeksData.data.week2Electricity,
-            backgroundColor: "rgba(255, 99, 132, 0.6)",
+            backgroundColor: "rgba(240, 207, 101, 0.6)",
           },
           {
             label: "Esta semana",
             data: threeWeeksData.data.week1Electricity,
-            backgroundColor: "rgba(54, 162, 235, 0.6)",
+            backgroundColor: "rgba(235, 232, 170, 0.6)",
           },
         ],
       };
@@ -79,40 +91,68 @@ console.log(threeWeeksData);
           {
             label: "Semana pasada",
             data: threeWeeksData.data.week3Water,
-            backgroundColor: "rgba(75, 192, 192, 0.6)",
+            backgroundColor: "rgba(109, 80, 220, 0.6)",
           },
           {
             label: "Semana anterior",
             data: threeWeeksData.data.week2Water,
-            backgroundColor: "rgba(255, 99, 132, 0.6)",
+            backgroundColor: "rgba(128, 147, 241, 0.6)",
           },
           {
             label: "Esta semana",
             data: threeWeeksData.data.week1Water,
-            backgroundColor: "rgba(54, 162, 235, 0.6)",
+            backgroundColor: "rgba(114, 221, 247, 0.6)",
           },
         ],
       };
+
+      const options = {
+        indexAxis: "x", 
+          responsive: true,
+        aspectRatio: 1.4,
+        scales: {
+        y: {
+            ticks: {
+                color: '#666',
+                font: {
+                    size: '30vw',
+                    weight: 'bold',
+                }
+            },
+            beginAtZero: true,
+        },
+        x: {
+            ticks: {
+                color: '#666',
+                font: {
+                    size: '35vw',
+                    weight: 'bold',
+                }
+            }
+        }
+    },
+    plugins: {
+        legend: {
+            labels: {
+               font:{
+                size:'30vw'
+               }
+               }
+         }
+         }
+    }
 
 
       const configElectricity = {
         type: "bar",
         data: dataElectricity,
-        options: {
-          indexAxis: "x", 
-          responsive: true,
-        aspectRatio: 1.1
-        },
+        options: options,
       };
 
       const configWater = {
         type: "bar",
         data: dataWater,
-        options: {
-          indexAxis: "x", 
-          responsive: true,
-        aspectRatio: 1.1
-        },
+        options: options
       };
 
       new Chart(ctx, configElectricity);

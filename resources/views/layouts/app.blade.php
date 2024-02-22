@@ -29,7 +29,7 @@
         }
 
         .track div {
-            font-size: 42px;
+            font-size: 4vh;
             color: whitesmoke;
         }
 

@@ -1,9 +1,9 @@
 @extends('layouts.app')
 
 @section('content')
-<section class="container ">
+<section class="container-fluid ">
     <div class="row justify-content-evenly ">
-        <div class="col-md-6">
+        <div class="col-md-6 bg-warning bg-opacity-10 rounded">
             <canvas id="chart1"></canvas>
         </div>
         <div class="col-md-6">
