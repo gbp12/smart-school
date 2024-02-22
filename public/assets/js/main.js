@@ -4,7 +4,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
     var currentIndex = 0;
 
-    var array_of_functions = [renderEveryDayLastThreeWeeks]; //renderWeeklyView, hola, renderEightHours, renderEveryDayLastThreeWeeks
+    var array_of_functions = [renderWeeklyView, hola, renderEightHours, renderEveryDayLastThreeWeeks]; //
 
     function callNextFunction() {
     
@@ -24,7 +24,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
     setInterval(() => {
         callNextFunction();
-    }, 30000000);
+    }, 3000);
 });
 
 function clearAll(){
