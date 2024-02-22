@@ -4,19 +4,21 @@ document.addEventListener("DOMContentLoaded", function () {
 
     var currentIndex = 0;
 
-    var array_of_functions = [renderWeeklyView, hola, renderEightHours];
+    var array_of_functions = [renderWeeklyView, hola, renderEightHours, renderEveryDayLastThreeWeeks];
 
     function callNextFunction() {
-    crearAll();
-    console.log(currentIndex+" es el index")
-        if (currentIndex < array_of_functions.length) {
+    
+        if (currentIndex < (array_of_functions.length)) {
+            clearAll();
             array_of_functions[currentIndex](ctx, ct2);
             currentIndex++;
+
         } else {
             currentIndex = 0;
+
         }
     }
-
+    
     callNextFunction();
     
 
@@ -38,17 +40,93 @@ function hola() {
 }
 
 
+async function renderEveryDayLastThreeWeeks(ctx, ct2){
+    const title = document.getElementById("viewTitle");
+    title.innerHTML = "Consumo cada dia las ultimas 3 semanas";
+    const threeWeeksData = await axios
+    .get("/getEveryDayLastWeeks")
+    .catch(function (error) {
+        console.error("Error fetching data:", error);
+    });
 
+console.log(threeWeeksData);
+
+
+    const dataElectricity = {
+        labels: threeWeeksData.data.daysLabels,
+        datasets: [
+          {
+            label: "Semana pasada",
+            data: threeWeeksData.data.week3Electricity,
+            backgroundColor: "rgba(75, 192, 192, 0.6)",
+          },
+          {
+            label: "Semana anterior",
+            data: threeWeeksData.data.week2Electricity,
+            backgroundColor: "rgba(255, 99, 132, 0.6)",
+          },
+          {
+            label: "Esta semana",
+            data: threeWeeksData.data.week1Electricity,
+            backgroundColor: "rgba(54, 162, 235, 0.6)",
+          },
+        ],
+      };
+
+      const dataWater = {
+        labels: threeWeeksData.data.daysLabels,
+        datasets: [
+          {
+            label: "Semana pasada",
+            data: threeWeeksData.data.week3Water,
+            backgroundColor: "rgba(75, 192, 192, 0.6)",
+          },
+          {
+            label: "Semana anterior",
+            data: threeWeeksData.data.week2Water,
+            backgroundColor: "rgba(255, 99, 132, 0.6)",
+          },
+          {
+            label: "Esta semana",
+            data: threeWeeksData.data.week1Water,
+            backgroundColor: "rgba(54, 162, 235, 0.6)",
+          },
+        ],
+      };
+
+
+      const configElectricity = {
+        type: "bar",
+        data: dataElectricity,
+        options: {
+          indexAxis: "x", 
+          responsive: true,
+        aspectRatio: 1.1
+        },
+      };
+
+      const configWater = {
+        type: "bar",
+        data: dataWater,
+        options: {
+          indexAxis: "x", 
+          responsive: true,
+        aspectRatio: 1.1
+        },
+      };
+
+      new Chart(ctx, configElectricity);
+      new Chart(ct2, configWater);
+}
 
 async function renderEightHours(ctx, ct2){
     const title = document.getElementById("viewTitle");
-    title.innerHTML = "Consumo semanal";
+    title.innerHTML = "Consumo en las ultimas 8 horas";
     //clearCanvas("chart1");
     //clearCanvas("chart2");
     drawEightHours(ctx, ct2);
     /*clearCanvas("chart2");
     drawWeeklyElectricity(ct2);*/
-
 
 }
 
@@ -58,14 +136,20 @@ async function drawEightHours(ctx, ct2){
     .catch(function (error) {
         console.error("Error fetching data:", error);
     });
-    //const testEight = document.getElementById("chart1")
-    let htmlBefore = "<h1 class='test'> Ejemplo 8 horas Elec</h1>";
-    let htmlAfter = "<h2 class='test'>Ultima medicion <span>"+EightHoursData.data.lastReadingElectricity+"</span> kW/h</h2> \
+
+    let htmlBeforeElec = "<h1 class='test'> Consumo electrico en las ultimas 8 horas</h1>";
+    let htmlAfterElec = "<h2 class='test'>Ultima medicion <span>"+EightHoursData.data.lastReadingElectricity+"</span> kW/h</h2> \
     <h3 class='test'>Tomada a las <span>"+EightHoursData.data.lastReadingElectricityDate+"</span></h3>";
-    //testEight.insertAdjacentHTML("beforebegin", htmlBefore);
-    $(htmlBefore).insertBefore("#chart1");
-    $(htmlAfter).insertAfter("#chart1");
-    //testEight.insertAdjacentHTML("afterend", htmlAfter);
+    let htmlBeforeWater = "<h1 class='test'> Consumo de agua en las ultimas 8 horas</h1>";
+    let htmlAfterWater = "<h2 class='test'>Ultima medicion <span>"+EightHoursData.data.lastReadingWater+"</span> kW/h</h2> \
+    <h3 class='test'>Tomada a las <span>"+EightHoursData.data.lastReadingWaterDate+"</span></h3>";
+    
+
+    $(htmlBeforeElec).insertBefore("#chart1");
+    $(htmlAfterElec).insertAfter("#chart1");
+    $(htmlBeforeWater).insertBefore("#chart2");
+    $(htmlAfterWater).insertAfter("#chart2");
+
     let options = {
         responsive: true,
         aspectRatio: 1.1,
@@ -92,15 +176,12 @@ async function drawEightHours(ctx, ct2){
         }
     };
 
-console.log(EightHoursData);
-console.log("esa fue la data");
-    
-   // let ctx = document.getElementById('barChartWater').getContext('2d');
+
     new Chart(ctx, {
         type: 'line',
         data: {
 
-            labels: EightHoursData.data.electricityLabels, //Works but its highlighted as an error, FIX?
+            labels: EightHoursData.data.electricityLabels,
             datasets: [{
                 label: 'l/h',
                 data: EightHoursData.data.totalElectricityConsumo,
@@ -114,12 +195,12 @@ console.log("esa fue la data");
 
     
 
-    //let ctxE = document.getElementById('barChartElectricity').getContext('2d');
+   
     new Chart(ct2, {
         type: 'line',
         data: {
 
-            labels: EightHoursData.data.waterLabels, //Works but its highlighted as an error, FIX?
+            labels: EightHoursData.data.waterLabels, 
             datasets: [{
                 label: 'kW/h',
                 data: EightHoursData.data.totalWaterConsumo,

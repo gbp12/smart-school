@@ -42,6 +42,10 @@
                 transform: translateX(-50%);
             }
         }
+
+        span {
+            font-weight: bold;
+        }
     </style>
 </head>
 

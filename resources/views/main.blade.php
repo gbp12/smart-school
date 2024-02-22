@@ -2,7 +2,7 @@
 
 @section('content')
 <section class="container ">
-    <div class="row ">
+    <div class="row justify-content-evenly ">
         <div class="col-md-6">
             <canvas id="chart1"></canvas>
         </div>

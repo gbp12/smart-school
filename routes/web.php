@@ -25,3 +25,5 @@ Route::get('/getWeeklyElectricity', "App\Http\Controllers\MainController@getWeek
 Route::get('/getWeeklyWater', "App\Http\Controllers\MainController@getWeeklyWater");
 /*Consigue los consumos totales de las ultimas 8 horas*/
 Route::get('/getLastEightHours', 'App\Http\Controllers\MainController@getLastEightHours');
+/*Consigue los consumos de cada dia de las ultimas 3 semanas (actual inclusive)*/
+Route::get('/getEveryDayLastWeeks', 'App\Http\Controllers\MainController@getEveryDayLastWeeks');

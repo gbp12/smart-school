@@ -151,6 +151,110 @@ LIMIT 1;";
         return $diferencias;
     }
 
+    public function eachDayQuery($weeks, $sensor)
+    {
+        $curDate = "2023-02-15 15:00:00";
+
+        // 1-0 | 2-1 | 3-2
+
+
+        $weekQuery = "SELECT 
+        DAYNAME(m.fecha) as dia_semana,
+        MAX(m.consumo) as max_consumo,
+        MIN(m.consumo) as min_consumo,
+        (MAX(m.consumo) - MIN(m.consumo)) as diferencia_consumo
+        FROM measurements m
+        WHERE fecha BETWEEN (DATE('$curDate') - INTERVAL $weeks+1 WEEK + INTERVAL 1 DAY) AND (DATE('$curDate') - INTERVAL $weeks WEEK -INTERVAL 1 HOUR + INTERVAL 1 DAY ) 
+        AND id_sensor = $sensor
+        GROUP BY DAYNAME(m.fecha)
+        ORDER BY max_consumo DESC;";
+        //DATE parses all dates to midnight
+        return DB::select($weekQuery);
+        //dd($testRes);
+
+        /*$lastDayQuery = "SELECT 
+        DAYNAME(m.fecha) as dia_semana,
+        MAX(m.consumo) as max_consumo,
+        MIN(m.consumo) as min_consumo
+        FROM measurements m
+        WHERE fecha BETWEEN (DATE('$curDate') ) AND ('$curDate') 
+        AND id_sensor = 1
+        GROUP BY DAYNAME(m.fecha)
+        ORDER BY max_consumo DESC;";
+        $res = DB::select($lastDayQuery);
+        //dd($res);*/
+    }
+
+    public function getEveryDayLastWeeks()
+    {
+        $week1 = $this->eachDayQuery(0, 1);
+        $week2 = $this->eachDayQuery(1, 1);
+        $week3 = $this->eachDayQuery(2, 1);
+        //dd($week1, $week2, $week3);
+
+        $daysLabels = array_column($week1, 'dia_semana');
+
+        $week1Electricity = array_column($week1, 'diferencia_consumo');
+        $week2Electricity = array_column($week2, 'diferencia_consumo');
+        $week3Electricity = array_column($week3, 'diferencia_consumo');
+        // dd($week1Electricity, $daysLabels);
+
+        $week1 = $this->eachDayQuery(0, 2);
+        $week2 = $this->eachDayQuery(1, 2);
+        $week3 = $this->eachDayQuery(2, 2);
+
+        $week1Water = array_column($week1, 'diferencia_consumo');
+        $week2Water = array_column($week2, 'diferencia_consumo');
+        $week3Water = array_column($week3, 'diferencia_consumo');
+
+        $data["daysLabels"] = array_reverse($this->translateDays($daysLabels));
+        $data["week1Electricity"] = array_reverse($week1Electricity);
+        $data["week2Electricity"] = array_reverse($week2Electricity);
+        $data["week3Electricity"] = array_reverse($week3Electricity);
+        $data["week1Water"] = array_reverse($week1Water);
+        $data["week2Water"] = array_reverse($week2Water);
+        $data["week3Water"] = array_reverse($week3Water);
+
+
+        return response()->json($data, 200);
+
+        /*$curDate = "2020-05-21 11:00:00"; //Must change to current date when sensors are connected to db
+// 1-0 | 2-1 | 3-2
+
+
+        $queryTest = "SELECT 
+        m.fecha as dia_semana,
+        MAX(m.consumo) as max_consumo,
+        MIN(m.consumo) as min_consumo
+        FROM measurements m
+        WHERE fecha BETWEEN ('$curDate' - INTERVAL 1 WEEK) AND ('$curDate' - INTERVAL 0 WEEK )
+        AND id_sensor = 1
+        GROUP BY (m.fecha)
+        ORDER BY max_consumo DESC;";
+        $testRes  = DB::select($queryTest);
+        dd($testRes);
+*/
+    }
+
+    function translateDays($days)
+    {
+        $translations = [
+            "Monday" => "Lunes",
+            "Tuesday" => "Martes",
+            "Wednesday" => "Miércoles",
+            "Thursday" => "Jueves",
+            "Friday" => "Viernes",
+            "Saturday" => "Sábado",
+            "Sunday" => "Domingo"
+        ];
+
+        $translatedDays = array_map(function ($englishDay) use ($translations) {
+            return $translations[$englishDay];
+        }, $days);
+
+        return $translatedDays;
+    }
+
 
     public function getLastEightHours()
     {
