@@ -192,7 +192,7 @@ async function drawEightHours(ctx, ct2){
 
     let options = {
         responsive: true,
-        aspectRatio: 1.1,
+        aspectRatio: 1.4,
         scales: {
             y: {
                 ticks: {
