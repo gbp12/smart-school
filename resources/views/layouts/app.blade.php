@@ -33,6 +33,11 @@
             color: whitesmoke;
         }
 
+        body {
+            height: 90vh;
+
+        }
+
         @keyframes marquee {
             from {
                 transform: translateX(0%);
@@ -56,7 +61,7 @@
     </header>
     <div id="viewTitle">pene</div>
 
-    <main class="container-fluid">
+    <main class="container-fluid ">
         @yield('content')
     </main>
 
