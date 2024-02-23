@@ -26,7 +26,6 @@ class MainController extends Controller
     {
         $resultadosCurrentYear = $this->fetchMonthlyUse(2);
         $actualUse = $this->calculateActualUse($resultadosCurrentYear);
-
         return response()->json($actualUse, 200);
     }
 

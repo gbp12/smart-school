@@ -25,7 +25,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
     setInterval(() => {
         callNextFunction();
-    }, 5000);
+    }, 60000);
 
     function currentTime() {
         var date = new Date(); /* creating object of Date class */
@@ -85,10 +85,10 @@ function getSpanishMonthName(dateString) {
 
 function renderMonthlyView(ctx, ct2) {
     const title = document.getElementById("viewTitle");
-    title.innerHTML = "Consumo anual";
-    let htmlBeforeElec = "<h1 class='test'> Consumo electrico por meses</h1>";
+    title.innerHTML = "Consumo del año repartido en meses";
+    let htmlBeforeElec = "<h4 class='test'> Consumo electrico</h4>";
     $(htmlBeforeElec).insertBefore("#chart2");
-    let htmlBeforeWater = "<h1 class='test'> Consumo de agua por meses</h1>";
+    let htmlBeforeWater = "<h4 class='test'> Consumo de agua</h4>";
     $(htmlBeforeWater).insertBefore("#chart1");
     drawMonthlyWater(ctx);
     drawMonthlyElectricity(ct2);
@@ -202,7 +202,7 @@ async function renderEveryDayLastThreeWeeks(ctx, ct2) {
 
     console.log(threeWeeksData);
     let htmlBeforeElec =
-        "<h1 class='test'> Consumo electrico en las ultimas 3 semanas</h1>";
+        "<h4 class='test'> Consumo electrico</h4>";
     let htmlAfterElec =
         "<h2 class='test'>Hoy estamos a <span>" +
         threeWeeksData.data.daysLabels[6] +
@@ -211,7 +211,7 @@ async function renderEveryDayLastThreeWeeks(ctx, ct2) {
         threeWeeksData.data.week1Electricity[6] +
         " kW/h</span> </h3>";
     let htmlBeforeWater =
-        "<h1 class='test'> Consumo de agua en las ultimas 3 semanas</h1>";
+        "<h4 class='test'> Consumo de agua</h4>";
     let htmlAfterWater =
         "<h2 class='test'>Hoy estamos a <span>" +
         threeWeeksData.data.daysLabels[6] +
@@ -337,7 +337,7 @@ async function drawEightHours(ctx, ct2) {
         });
 
     let htmlBeforeElec =
-        "<h1 class='test'> Consumo electrico en las ultimas 8 horas</h1>";
+        "<h4 class='test'> Consumo electrico</h4>";
     let htmlAfterElec =
         "<h2 class='test'>Ultima medicion <span>" +
         EightHoursData.data.lastReadingElectricity +
@@ -346,7 +346,7 @@ async function drawEightHours(ctx, ct2) {
         EightHoursData.data.lastReadingElectricityDate +
         "</span></h3>";
     let htmlBeforeWater =
-        "<h1 class='test'> Consumo de agua en las ultimas 8 horas</h1>";
+        "<h4 class='test'> Consumo de agua</h4>";
     let htmlAfterWater =
         "<h2 class='test'>Ultima medicion <span>" +
         EightHoursData.data.lastReadingWater +
@@ -422,11 +422,11 @@ async function drawEightHours(ctx, ct2) {
 
 async function renderWeeklyView(ctx, ct2) {
     const title = document.getElementById("viewTitle");
-    title.innerHTML = "Consumo semanal";
+    title.innerHTML = "Consumo de las ultimas 4 semanas";
     let htmlBeforeElec =
-        "<h1 class='test'> Consumo electrico de las ultimas 4 semanas</h1>";
+        "<h4 class='test'> Consumo electrico</h4>";
     let htmlBeforeWater =
-        "<h1 class='test'> Consumo de agua de las ultimas 4 semanas</h1>";
+        "<h4 class='test'> Consumo de agua</h4>";
 
     $(htmlBeforeElec).insertBefore("#chart2");
     $(htmlBeforeWater).insertBefore("#chart1");

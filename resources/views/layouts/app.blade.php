@@ -53,9 +53,10 @@
             background-color: rgb(33, 37, 41);
             color: white;
             padding: 5px;
-            font-size: 1.5rem;
+            font-size: 2.5rem;
             font-weight: bold;
             padding-left: 1.5rem;
+            margin-bottom: 1.5rem;
         }
 
         .content {
