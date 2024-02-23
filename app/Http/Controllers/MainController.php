@@ -153,9 +153,7 @@ LIMIT 1;";
 
     public function eachDayQuery($weeks, $sensor)
     {
-        $curDate = "2023-02-15 15:00:00";
-
-        // 1-0 | 2-1 | 3-2
+        $curDate = "2020-05-15 15:00:00";
 
 
         $weekQuery = "SELECT 
@@ -168,21 +166,8 @@ LIMIT 1;";
         AND id_sensor = $sensor
         GROUP BY DAYNAME(m.fecha)
         ORDER BY max_consumo DESC;";
-        //DATE parses all dates to midnight
-        return DB::select($weekQuery);
-        //dd($testRes);
 
-        /*$lastDayQuery = "SELECT 
-        DAYNAME(m.fecha) as dia_semana,
-        MAX(m.consumo) as max_consumo,
-        MIN(m.consumo) as min_consumo
-        FROM measurements m
-        WHERE fecha BETWEEN (DATE('$curDate') ) AND ('$curDate') 
-        AND id_sensor = 1
-        GROUP BY DAYNAME(m.fecha)
-        ORDER BY max_consumo DESC;";
-        $res = DB::select($lastDayQuery);
-        //dd($res);*/
+        return DB::select($weekQuery);
     }
 
     public function getEveryDayLastWeeks()
@@ -190,14 +175,12 @@ LIMIT 1;";
         $week1 = $this->eachDayQuery(0, 1);
         $week2 = $this->eachDayQuery(1, 1);
         $week3 = $this->eachDayQuery(2, 1);
-        //dd($week1, $week2, $week3);
 
         $daysLabels = array_column($week1, 'dia_semana');
 
         $week1Electricity = array_column($week1, 'diferencia_consumo');
         $week2Electricity = array_column($week2, 'diferencia_consumo');
         $week3Electricity = array_column($week3, 'diferencia_consumo');
-        // dd($week1Electricity, $daysLabels);
 
         $week1 = $this->eachDayQuery(0, 2);
         $week2 = $this->eachDayQuery(1, 2);
@@ -217,23 +200,6 @@ LIMIT 1;";
 
 
         return response()->json($data, 200);
-
-        /*$curDate = "2020-05-21 11:00:00"; //Must change to current date when sensors are connected to db
-// 1-0 | 2-1 | 3-2
-
-
-        $queryTest = "SELECT 
-        m.fecha as dia_semana,
-        MAX(m.consumo) as max_consumo,
-        MIN(m.consumo) as min_consumo
-        FROM measurements m
-        WHERE fecha BETWEEN ('$curDate' - INTERVAL 1 WEEK) AND ('$curDate' - INTERVAL 0 WEEK )
-        AND id_sensor = 1
-        GROUP BY (m.fecha)
-        ORDER BY max_consumo DESC;";
-        $testRes  = DB::select($queryTest);
-        dd($testRes);
-*/
     }
 
     function translateDays($days)
@@ -281,18 +247,15 @@ LIMIT 1;";
 
         $electricityResults  = DB::select($queryElectricity);
         $electricityResults = $this->calculateActualUse($electricityResults);
-        //dd($electricityResults);
         $waterResults = DB::select($queryWater);
         $waterResults = $this->calculateActualUse($waterResults);
 
-        //dd($this->calculateActualUse($electricityResults));
 
 
         $totalElectricityConsumo = array_column($electricityResults, 'consumo'); //we only need consumo
         $electricityLabels =  array_column($electricityResults, 'fecha');
         $totalWaterConsumo = array_column($waterResults, 'consumo');
         $waterLabels =  array_column($waterResults, 'fecha');
-        //dd($totalElectricityConsumo, $electricityLabels);
 
 
 
@@ -300,12 +263,11 @@ LIMIT 1;";
         $waterAverage = $this->averageCalculator(($totalWaterConsumo));
 
 
-        //dd($totalElectricityConsumo, $totalWaterConsumo, $waterAverage, $electricityAverage);
 
 
         $viewData = [];
-        $viewData["titleWater"] = "Consumo agua 8 horas"; //Cambiar
-        $viewData["titleElectricity"] = "Consumo electrico 8 horas"; //Cambiar
+        $viewData["titleWater"] = "Consumo agua 8 horas";
+        $viewData["titleElectricity"] = "Consumo electrico 8 horas";
 
         $viewData["electricityAverage"] = $electricityAverage;
         $viewData["waterAverage"] = $waterAverage;
@@ -323,11 +285,7 @@ LIMIT 1;";
         $data["lastReadingElectricity"] = end($totalElectricityConsumo);
         $data["lastReadingWater"] = end($totalWaterConsumo);
 
-        //$data["electricityThreshold"] = [min($totalElectricityConsumo), max($totalElectricityConsumo)]; //might not be needed | might be simplified in function
-        //$data["waterThreshold"] = [min($totalWaterConsumo), max($totalWaterConsumo)]; //ditto
 
-        //return view('eightHour', compact('data'))->with("verDatos", $viewData);
-        //dd($data);
         return response()->json($data, 200);
     }
 

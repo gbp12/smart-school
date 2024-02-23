@@ -117,8 +117,14 @@ async function drawMonthlyWater(ctx) {
 
     var options = {
         scales: {
-            y: {
-                beginAtZero: true,
+            x: {
+                ticks: {
+                    color: "#666",
+                    font: {
+                        size: "35vw",
+                        weight: "bold",
+                    },
+                },
             },
         },
     };
@@ -154,8 +160,14 @@ async function drawMonthlyElectricity(ctx) {
 
     var options = {
         scales: {
-            y: {
-                beginAtZero: true,
+            x: {
+                ticks: {
+                    color: "#666",
+                    font: {
+                        size: "35vw",
+                        weight: "bold",
+                    },
+                },
             },
         },
     };
@@ -452,7 +464,23 @@ async function drawWeeklyWater(ctx) {
     var options = {
         scales: {
             y: {
+                ticks: {
+                    color: "#666",
+                    font: {
+                        size: 20,
+                        weight: "bold",
+                    },
+                },
                 beginAtZero: true,
+            },
+            x: {
+                ticks: {
+                    color: "#666",
+                    font: {
+                        size: 20,
+                        weight: "bold",
+                    },
+                },
             },
         },
     };
@@ -492,7 +520,23 @@ async function drawWeeklyElectricity(ctx) {
     var options = {
         scales: {
             y: {
+                ticks: {
+                    color: "#666",
+                    font: {
+                        size: 20,
+                        weight: "bold",
+                    },
+                },
                 beginAtZero: true,
+            },
+            x: {
+                ticks: {
+                    color: "#666",
+                    font: {
+                        size: 20,
+                        weight: "bold",
+                    },
+                },
             },
         },
     };
