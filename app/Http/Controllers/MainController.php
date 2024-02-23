@@ -47,7 +47,7 @@ class MainController extends Controller
 
     public function fetchMonthlyUse($id_type)
     {
-        $queryCurrentYear = "SELECT m.id_sensor, m.consumo, m.fecha AS fecha
+        $queryCurrentYear = "SELECT m.id_sensor, m.consumo, DATE(m.fecha) as fecha
         FROM measurements m
         INNER JOIN (
             SELECT MAX(fecha) AS ultima_fecha

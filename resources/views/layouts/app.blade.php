@@ -38,6 +38,31 @@
 
         }
 
+        header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1rem;
+            background-color: #007BA7;
+            color: white;
+            font-size: 3rem;
+            font-weight: bold;
+        }
+
+        #viewTitle {
+            background-color: rgb(33, 37, 41);
+            color: white;
+            padding: 10px;
+            font-size: 2rem;
+            font-weight: bold;
+            padding-left: 1.5rem;
+        }
+
+        .content {
+            display: inline-block;
+            padding: 0 2vw;
+        }
+
         @keyframes marquee {
             from {
                 transform: translateX(0%);
@@ -56,10 +81,14 @@
 
 <body>
 
+
     <header>
-        este es el header de la app,
+        <div>
+            Projecto: Smart Eco School
+        </div>
+        <div style="font-weight: bold;" id="clock"></div>
     </header>
-    <div id="viewTitle">pene</div>
+    <div id="viewTitle"></div>
 
     <main class="container-fluid ">
         @yield('content')
