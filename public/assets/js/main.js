@@ -258,7 +258,7 @@ async function renderEveryDayLastThreeWeeks(ctx, ct2) {
     const options = {
         indexAxis: "x",
         responsive: true,
-        aspectRatio: 1.4,
+        
         scales: {
             y: {
                 ticks: {
@@ -350,7 +350,6 @@ async function drawEightHours(ctx, ct2) {
 
     let options = {
         responsive: true,
-        aspectRatio: 1.1,
         scales: {
             y: {
                 ticks: {
@@ -417,8 +416,8 @@ async function renderWeeklyView(ctx, ct2) {
     let htmlBeforeWater =
         "<h1 class='test'> Consumo de agua de las ultimas 4 semanas</h1>";
 
-    $(htmlBeforeElec).insertBefore("#chart1");
-    $(htmlBeforeWater).insertBefore("#chart2");
+    $(htmlBeforeElec).insertBefore("#chart2");
+    $(htmlBeforeWater).insertBefore("#chart1");
     //clearCanvas("chart1");
     drawWeeklyWater(ctx);
     //clearCanvas("chart2");

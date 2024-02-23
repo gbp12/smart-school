@@ -42,7 +42,7 @@
             display: flex;
             justify-content: space-between;
             align-items: center;
-            padding: 1rem;
+            padding: 0.5rem;
             background-color: #007BA7;
             color: white;
             font-size: 3rem;
@@ -52,8 +52,8 @@
         #viewTitle {
             background-color: rgb(33, 37, 41);
             color: white;
-            padding: 10px;
-            font-size: 2rem;
+            padding: 5px;
+            font-size: 1.5rem;
             font-weight: bold;
             padding-left: 1.5rem;
         }
