@@ -87,9 +87,9 @@ function renderMonthlyView(ctx, ct2) {
     const title = document.getElementById("viewTitle");
     title.innerHTML = "Consumo anual";
     let htmlBeforeElec = "<h1 class='test'> Consumo electrico por meses</h1>";
-    $(htmlBeforeElec).insertBefore("#chart1");
+    $(htmlBeforeElec).insertBefore("#chart2");
     let htmlBeforeWater = "<h1 class='test'> Consumo de agua por meses</h1>";
-    $(htmlBeforeWater).insertBefore("#chart2");
+    $(htmlBeforeWater).insertBefore("#chart1");
     drawMonthlyWater(ctx);
     drawMonthlyElectricity(ct2);
 }
@@ -107,7 +107,7 @@ async function drawMonthlyWater(ctx) {
         datasets: [
             {
                 label: "Consumo de agua",
-                backgroundColor: "rgba(75, 192, 192, 0.2)",
+                backgroundColor: "rgba(48, 204, 204, 1)",
                 borderColor: "rgba(75, 192, 192, 1)",
                 borderWidth: 1,
                 data: weeklyWter.data.map((w) => w.consumo),
@@ -442,7 +442,7 @@ async function drawWeeklyWater(ctx) {
         datasets: [
             {
                 label: "Consumo de agua",
-                backgroundColor: "rgba(75, 192, 192, 0.2)",
+                backgroundColor: "rgba(48, 204, 204, 1)",
                 borderColor: "rgba(75, 192, 192, 1)",
                 borderWidth: 1,
                 data: weeklyWter.data.map((w) => w.consumo),
@@ -482,8 +482,8 @@ async function drawWeeklyElectricity(ctx) {
         datasets: [
             {
                 label: "Consumo de Electricidad",
-                backgroundColor: "rgba(75, 192, 192, 0.2)",
-                borderColor: "rgba(75, 192, 192, 1)",
+                backgroundColor: "rgba(234, 234, 0, 1)",
+                borderColor: "rgba(210, 255, 96, 1)",
                 borderWidth: 1,
                 data: weeklyWter.data.map((w) => w.consumo),
             },
